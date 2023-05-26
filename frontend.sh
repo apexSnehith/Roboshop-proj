@@ -4,7 +4,9 @@ yum install nginx -y
 systemctl enable nginx
 systemctl start nginx
 #remove default nginx content on the web
-cd /usr/share/nginx/html/ | ls -ls
+cd /usr/share/nginx/html/
+pwd
+ls -ls
 cd
 rm -rf /usr/share/nginx/html/*
 #download the frontend content.
