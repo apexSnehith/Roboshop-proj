@@ -1,5 +1,5 @@
 echo -e "\e[32m Installing nginx \e[0m" &>> /tmp/roboshop.log
-yum install nginx -y &> /log/roboshop.log
+yum install nginx -y &> /tmp/roboshop.log
 
 echo -e "\e[32m Removing default nginx content on the web\e[0m"
 rm -rf /usr/share/nginx/html/* &>> /tmp/roboshop.log
