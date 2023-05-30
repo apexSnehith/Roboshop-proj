@@ -2,7 +2,7 @@ echo -e "\e[32m Copy Mongodb Repo file \e[0m"
 cp /home/centos/Roboshop-proj/roboshop.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
 
 echo -e "\e[32m Installing Mongodb \e[0m"
-yum install roboshop-org -y &>>/tmp/roboshop.log
+yum install mongodb-org -y &>>/tmp/roboshop.log
 
 #Modify the Config file to set the "localhost(127.0.0.1) to localhost(0.0.0.0) in the /etc/roboshop.conf
 echo -e "\e[32m Configuring the Mongodb listen address \e[0m"
