@@ -1,5 +1,4 @@
 echo -e "\e[32mInstalling Maven\e[0m"
-echo -e "\e[32mInstalling redis\e[0m"
 yum install maven -yum
 echo -e "\e[32mAdding user for the service\e[0m"
 useradd roboshop
