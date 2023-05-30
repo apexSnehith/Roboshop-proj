@@ -15,13 +15,13 @@ unzip /tmp/catalogue.zip &>>/tmp/roboshop.log
 echo -e "\e[32 Downloading the dependencies\e[0m"
 npm install &>>/tmp/roboshop.log
 echo -e "\e[32 setup systemd service\e[0m"
-cp catalogue.service /etc/systemd/system/catalogue.service &>>/tmp/roboshop.log
+cp /home/centos/Roboshop-proj/catalogue.service /etc/systemd/system/catalogue.service &>>/tmp/roboshop.log
 echo -e "\e[32 Restart services\\e[0m"
 systemctl daemon-reload &>>/tmp/roboshop.log
 systemctl enable catalogue &>>/tmp/roboshop.log
 systemctl restart catalogue &>>/tmp/roboshop.log
 echo -e "\e[32 Install Mongodb client\e[0m"
-cp mongo.repo /et/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
+cp /home/centos/Roboshop-proj/mongo.repo /et/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
 yum install mongodb-org-shell -y &>>/tmp/roboshop.log
 cho -e "\e[32 load schema\e[0m"
 mongo --host mongodb-dev.snehithdops.online </app/schema/catalogue.js &>>/tmp/roboshop.log
