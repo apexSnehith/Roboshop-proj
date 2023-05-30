@@ -13,7 +13,6 @@ echo -e "\e[32mUnziping\e[0m"
 cd /app
 unzip /tmp/catalogue.zip &>>/tmp/roboshop.log
 echo -e "\e[32mDownloading the dependencies\e[0m"
-cd /app
 npm install &>>/tmp/roboshop.log
 echo -e "\e[32msetup systemd service\e[0m"
 cp /home/centos/Roboshop-proj/catalogue.service /etc/systemd/system/catalogue.service &>>/tmp/roboshop.log
