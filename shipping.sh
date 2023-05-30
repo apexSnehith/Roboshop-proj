@@ -17,7 +17,7 @@ echo -e "e\[32mSetting up the Shipping service in the SystemD\e[0m"
 cp /home/centos/Roboshop-proj/shipping.service /etc/systemd/system/shipping.service &>>/tmp/roboshop.log
 echo -e "e\[32mInstalling&Loading the Schema\e[0m"
 yum install mysql -y &>>/tmp/roboshop.log
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/schema/shipping.sql &>>/tmp/roboshop.log
+mysql -h mysql-dev.snehithdops.online -uroot -pRoboShop@1 < /app/schema/shipping.sql &>>/tmp/roboshop.log
 echo -e "e\[32mEnabling&restarting the service\e[0m"
 systemctl daemon-reload &>>/tmp/roboshop.log
 systemctl enable shipping &>>/tmp/roboshop.log
