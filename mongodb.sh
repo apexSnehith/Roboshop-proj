@@ -6,7 +6,7 @@ yum install roboshop-org -y &>>/tmp/roboshop.log
 
 #Modify the Config file to set the "localhost(127.0.0.1) to localhost(0.0.0.0) in the /etc/roboshop.conf
 echo -e "\e[32m Configuring the localhost \e[0m"
-sed -i "s127.0.0.1/0.0.0.0" /etc/mongod.conf
+sed -i "s127.0.0.1/0.0.0.0/" /etc/mongod.conf
 echo -e "\e[32m Restaring the Mongodb service \e[0m"
 systemctl enable mongod &>>/tmp/roboshop.log
 systemctl restart mongod &>>/tmp/roboshop.log
