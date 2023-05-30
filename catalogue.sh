@@ -5,7 +5,7 @@ yum install nodejs -y &>>/tmp/roboshop.log
 echo -e "\e[32madding user for the service\e[0m"
 useradd roboshop &>>/tmp/roboshop.log
 echo -e "\e[32mcreate application dir\e[0m"
-#rm -rf /app &>>/tmp/roboshop.log
+rm -rf /app &>>/tmp/roboshop.log
 mkdir /app &>>/tmp/roboshop.log
 echo -e "\e[32mdownloading the app code to the app dir"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>/tmp/roboshop.log
