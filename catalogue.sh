@@ -1,6 +1,8 @@
 echo -e "\e[32msetting up the Nodejs repos \e[0m"
+#this downloading a file
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
 echo -e "\e[32minstalling the nodejs\e[0m"
+#intalling
 yum install nodejs -y &>>/tmp/roboshop.log
 echo -e "\e[32madding user for the service\e[0m"
 useradd roboshop &>>/tmp/roboshop.log
