@@ -1,11 +1,11 @@
 echo -e "\e[32m Copy Mongodb Repo file \e[0m"
-cp mongodb.repo /etc/yum.repos.d/mongo.repo &>>/tmp/mongodb.log
+cp roboshop.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
 
 echo -e "\e[32m Installing Mongodb \e[0m"
-yum install mongodb-org -y &>>/tmp/mongodb.log
+yum install roboshop-org -y &>>/tmp/roboshop.log
 
-#Modify the Config file to set the "localhost(127.0.0.1) to localhost(0.0.0.0) in the /etc/mongodb.conf
-
+#Modify the Config file to set the "localhost(127.0.0.1) to localhost(0.0.0.0) in the /etc/roboshop.conf
+sed -i "s127.0.0.1/0.0.0.0" /etc/mongod.conf
 echo -e "\e[32m Restaring the Mongodb service \e[0m"
-systemctl enable mongod &>>/tmp/mongodb.log
-systemctl restart mongod &>>/tmp/mongodb.log
+systemctl enable mongod &>>/tmp/roboshop.log
+systemctl restart mongod &>>/tmp/roboshop.log
