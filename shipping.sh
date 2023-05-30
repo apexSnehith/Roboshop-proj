@@ -1,5 +1,5 @@
 echo -e "\e[32mInstalling Maven\e[0m"
-yum install maven -yum
+yum install maven -y
 echo -e "\e[32mAdding user for the service\e[0m"
 useradd roboshop
 echo -e "\e[32mMaking a directory\e[0m"
