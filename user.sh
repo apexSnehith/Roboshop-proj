@@ -18,11 +18,11 @@ echo -e "\e[32mSetting up the service \e[0m"
 cp /home/centos/Roboshop-proj/user.service /etc/systemd/system/user.service &>>/tmp/roboshop.log
 echo -e "\e[32mEnabling&restarting the service \e[0m"
 systemctl daemon-reload &>>/tmp/roboshop.log
-systemctl enabling user &>>/tmp/roboshop.log
+systemctl enable user &>>/tmp/roboshop.log
 systemctl restart user &>>/tmp/roboshop.log
 echo -e "\e[32mSetting up the schema to install the mongodb client \e[0m"
 cp /home/centos/Roboshop-proj/mongo.repo /etc/systemd/system/mongo.repo &>>/tmp/roboshop.log
 echo -e "\e[32mInstalling the mongodb client \e[0m"
 yum install mongodb-org-shell -y &>>/tmp/roboshop.log
 echo -e "\e[32mLoading the Schema \e[0m"
-mongo --host MONGODB-SERVER-IPADDRESS </app/schema/user.js &>>/tmp/roboshop.log
+mongo --host mongodb-dev.snehithdops.online </app/schema/user.js &>>/tmp/roboshop.log
