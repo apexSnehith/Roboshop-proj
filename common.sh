@@ -30,13 +30,12 @@ nodejs(){
 }
 
 mongo_schema_setup(){
-  echo -e "\e[32mInstall Mongodb client\e[0m"
-   cp /home/centos/Roboshop-proj/mongo.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
-
-   yum install mongodb-org-shell -y &>>/tmp/roboshop.log
-
-   echo -e "\e[32mload schema\e[0m"
-   mongo --host mongodb-dev.snehithdops.online </app/schema/user.js &>>/tmp/roboshop.log
-
+ echo -e "${color}Install Mongodb client${nocolor}"
+ cp /home/centos/Roboshop-proj/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
+ yum install mongodb-org-shell -y &>>${log_file}
+ echo -e "${color}load schema${nocolor}"
+ mongo --host mongodb-dev.snehithdops.online <${app_path}/schema/$component.js &>>${log_file}
+ systemctl restart $component >>${log_file}
 }
+
 
