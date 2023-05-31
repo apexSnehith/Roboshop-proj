@@ -1,24 +1,26 @@
-echo -e "\e[32msetting up the Nodejs repos \e[0m"
+source common.sh
+component=cart
+echo -e "${color}setting up the Nodejs repos ${nocolor}"
 #this downloading a file
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
-echo -e "\e[32minstalling the nodejs\e[0m"
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_path}
+echo -e "${color}installing the nodejs${nocolor}"
 #intalling
-yum install nodejs -y &>>/tmp/roboshop.log
-echo -e "\e[32madding user for the service\e[0m"
-useradd roboshop &>>/tmp/roboshop.log
-echo -e "\e[32mcreate application dir\e[0m"
-rm -rf /app &>>/tmp/roboshop.log
-mkdir /app &>>/tmp/roboshop.log
-echo -e "\e[32mdownloading the app code to the app dir"
-curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart.zip &>>/tmp/roboshop.log
-echo -e "\e[32mUnziping\e[0m"
-cd /app
-unzip /tmp/cart.zip &>>/tmp/roboshop.log
-echo -e "\e[32mDownloading the dependencies\e[0m"
-npm install &>>/tmp/roboshop.log
-echo -e "\e[32msetup systemd service\e[0m"
-cp /home/centos/Roboshop-proj/cart.service /etc/systemd/system/cart.service &>>/tmp/roboshop.log
-echo -e "\e[32mRestart services\\e[0m"
-systemctl daemon-reload &>>/tmp/roboshop.log
-systemctl enable cart &>>/tmp/roboshop.log
-systemctl restart cart &>>/tmp/roboshop.log
+yum install nodejs -y &>>${log_path}
+echo -e "${color}adding user for the service${nocolor}"
+useradd roboshop &>>${log_path}
+echo -e "${color}create application dir${nocolor}"
+rm -rf ${app_path} &>>${log_path}
+mkdir ${app_path} &>>${log_path}
+echo -e "${color}downloading the app code to the app dir"
+curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_path}
+echo -e "${color}Unziping${nocolor}"
+cd ${app_path}
+unzip /tmp/${component}.zip &>>${log_path}
+echo -e "${color}Downloading the dependencies${nocolor}"
+npm install &>>${log_path}
+echo -e "${color}setup systemd service${nocolor}"
+cp /home/centos/Roboshop-proj/${component}.service /etc/systemd/system/${component}.service &>>${log_path}
+echo -e "${color}Restart services\${nocolor}"
+systemctl daemon-reload &>>${log_path}
+systemctl enable ${component} &>>${log_path}
+systemctl restart ${component} &>>${log_path}
