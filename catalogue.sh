@@ -1,33 +1,32 @@
+source common.sh
 component=catalogue
-color="\e[33m"
-nocolor="\e[0m"
+
 echo -e "${color}setting up the Nodejs repos ${nocolor}"
 #this downloading a file
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
 echo -e "${color}installing the nodejs${nocolor}"
-#intalling
-yum install nodejs -y &>>/tmp/roboshop.log
+yum install nodejs -y &>>${log_file}
 echo -e "${color}adding user for the service${nocolor}"
-useradd roboshop &>>/tmp/roboshop.log
+useradd roboshop &>>${log_file}
 echo -e "${color}create application dir${nocolor}"
-rm -rf /app &>>/tmp/roboshop.log
-mkdir /app &>>/tmp/roboshop.log
+rm -rf ${app_path} &>>${log_file}
+mkdir ${app_path} &>>${log_file}
 echo -e "${color}downloading the app code to the app dir"
-curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>/tmp/roboshop.log
+curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>${log_file}
 echo -e "${color}Unziping${nocolor}"
-cd /app
-unzip /tmp/$component.zip &>>/tmp/roboshop.log
+cd ${app_path}
+unzip /tmp/$component.zip &>>${log_file}
 echo -e "${color}Downloading the dependencies${nocolor}"
-npm install &>>/tmp/roboshop.log
+npm install &>>${log_file}
 echo -e "${color}setup systemd service${nocolor}"
-cp /home/centos/Roboshop-proj/$component.service /etc/systemd/system/$component.service &>>/tmp/roboshop.log
+cp /home/centos/Roboshop-proj/$component.service /etc/systemd/system/$component.service &>>${log_file}
 echo -e "${color}Restart services\${nocolor}"
-systemctl daemon-reload &>>/tmp/roboshop.log
-systemctl enable $component &>>/tmp/roboshop.log
-systemctl restart $component &>>/tmp/roboshop.log
+systemctl daemon-reload &>>${log_file}
+systemctl enable $component &>>${log_file}
+systemctl restart $component &>>${log_file}
 echo -e "${color}Install Mongodb client${nocolor}"
-cp /home/centos/Roboshop-proj/mongo.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
-yum install mongodb-org-shell -y &>>/tmp/roboshop.log
+cp /home/centos/Roboshop-proj/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
+yum install mongodb-org-shell -y &>>${log_file}
 echo -e "${color}load schema${nocolor}"
-mongo --host mongodb-dev.snehithdops.online </app/schema/$component.js &>>/tmp/roboshop.log
-systemctl restart $component >>/tmp/roboshop.log
+mongo --host mongodb-dev.snehithdops.online <${app_path}/schema/$component.js &>>${log_file}
+systemctl restart $component >>${log_file}
