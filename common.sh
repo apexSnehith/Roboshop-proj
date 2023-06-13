@@ -33,7 +33,7 @@ app_presentup(){
   cd ${app_path}
   unzip /tmp/$component.zip &>>${log_file}
 
- stat_check $?
+  stat_check $?
 }
 
 systemd_setup(){
@@ -41,6 +41,7 @@ systemd_setup(){
   echo -e "${color}setup systemd service${nocolor}"
   cp /home/centos/Roboshop-proj/$component.service /etc/systemd/system/$component.service &>>${log_file}
 
+  sed -i -e "s/roboshop_app_pass/$roboshop_app_pass/" /etc/systemd/system/$component.service
   stat_check $?
   echo -e "${color}Enabling&restarting the service${nocolor}"
   systemctl daemon-reload &>>${log_file}
