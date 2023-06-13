@@ -6,30 +6,60 @@ app_path="/app"
 app_presentup(){
   echo -e "${color}adding user for the service${nocolor}"
   useradd roboshop &>>${log_file}
-  echo $?
+
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
   echo -e "${color}create application dir${nocolor}"
   rm -rf ${app_path} &>>${log_file}
   mkdir ${app_path} &>>${log_file}
-  echo $?
+
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
   echo -e "${color}downloading the app code to the app dir"
   curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>${log_file}
-  echo $?
+
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
   echo -e "${color}Unziping${nocolor}"
   cd ${app_path}
   unzip /tmp/$component.zip &>>${log_file}
-  echo $?
+
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 }
 
 systemd_setup(){
 
   echo -e "${color}setup systemd service${nocolor}"
   cp /home/centos/Roboshop-proj/$component.service /etc/systemd/system/$component.service &>>${log_file}
-  echo $?
+
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
   echo -e "${color}Enabling&restarting the service${nocolor}"
   systemctl daemon-reload &>>${log_file}
   systemctl enable $component &>>${log_file}
   systemctl restart $component &>>${log_file}
-  echo $?
+
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 }
 
 nodejs(){
@@ -81,13 +111,24 @@ maven(){
 python(){
   echo -e "${color}Installing python${nocolor}"
   yum install python36 gcc python3-devel -y >>${log_file}
-
-  echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 
   app_presentup
 
+  echo -e "${color}Installing Application Dependencies${nocolor}"
   cd /app
   pip3.6 install -r requirements.txt >>${log_file}
+
+
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 
   systemd_setup
 
