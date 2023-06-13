@@ -6,7 +6,7 @@ app_path="/app"
 app_presentup(){
   echo -e "${color}adding user for the service${nocolor}"
   id roboshop &>>${log_file}
-  if [ $? -eq 1]; then
+  if [ $? -eq 1 ]; then
     useradd roboshop &>>${log_file}
   fi
   if [ $? -eq 0 ]; then
