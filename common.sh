@@ -3,43 +3,37 @@ nocolor="\e[0m"
 log_file="/tmp/roboshop.log"
 app_path="/app"
 
+stat_check(){
+  if [ $1 -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
+}
+
 app_presentup(){
   echo -e "${color}adding user for the service${nocolor}"
   id roboshop &>>${log_file}
   if [ $? -eq 1 ]; then
     useradd roboshop &>>${log_file}
   fi
-  if [ $? -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-  fi
+  stat_check $?
+
   echo -e "${color}create application dir${nocolor}"
   rm -rf ${app_path} &>>${log_file}
   mkdir ${app_path} &>>${log_file}
 
-  if [ $? -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-  fi
+  stat_check $?
   echo -e "${color}downloading the app code to the app dir"
   curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>${log_file}
 
-  if [ $? -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-  fi
+  stat_check $?
+
   echo -e "${color}Unziping${nocolor}"
   cd ${app_path}
   unzip /tmp/$component.zip &>>${log_file}
 
-  if [ $? -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-  fi
+ stat_check $?
 }
 
 systemd_setup(){
@@ -47,21 +41,13 @@ systemd_setup(){
   echo -e "${color}setup systemd service${nocolor}"
   cp /home/centos/Roboshop-proj/$component.service /etc/systemd/system/$component.service &>>${log_file}
 
-  if [ $? -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-  fi
+  stat_check $?
   echo -e "${color}Enabling&restarting the service${nocolor}"
   systemctl daemon-reload &>>${log_file}
   systemctl enable $component &>>${log_file}
   systemctl restart $component &>>${log_file}
 
-  if [ $? -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-  fi
+  stat_check $?
 }
 
 nodejs(){
@@ -113,11 +99,7 @@ maven(){
 python(){
   echo -e "${color}Installing python${nocolor}"
   yum install python36 gcc python3-devel -y >>${log_file}
-  if [ $? -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-  fi
+  stat_check $?
 
   app_presentup
 
@@ -126,11 +108,7 @@ python(){
   pip3.6 install -r requirements.txt >>${log_file}
 
 
-  if [ $? -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-  fi
+  stat_check $?
 
   systemd_setup
 
